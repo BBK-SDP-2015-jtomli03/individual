@@ -28,6 +28,9 @@ public class SubtractInstructionTest {
         assertEquals(5, m.getRegisters().getRegister(1));
     }
 
-
+    @Test
+    public void testToString() throws Exception {
+        assertEquals("f1: sub 2 - 3 to 1", ins.toString());
+    }
 
 }
