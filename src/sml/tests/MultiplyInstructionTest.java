@@ -30,6 +30,6 @@ public class MultiplyInstructionTest {
 
     @Test
     public void testToString() throws Exception {
-
+        assertEquals("f1: mul 2 * 3 to 1", ins.toString());
     }
 }
