@@ -112,6 +112,10 @@ public class Translator {
 			s2 = scanInt();
 			return new DivideInstruction(label, r, s1, s2);
 
+		case "out":
+			r = scanInt();
+			return new OutInstruction(label, r);
+
 		}
 		return null;
 	}
