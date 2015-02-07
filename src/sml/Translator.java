@@ -116,6 +116,15 @@ public class Translator {
 			r = scanInt();
 			return new OutInstruction(label, r);
 
+		case "bnz":
+			r = scanInt();
+			nextStatement = scan();
+			return new BnzInstruction(label, r, nextStatement);
+
+		default:
+			System.out.println("Your file contains an instruction that doesn't exist. Please amend and try again.");
+			return null;
+
 		}
 		return null;
 	}
