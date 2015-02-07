@@ -18,11 +18,11 @@ public class OutInstruction extends Instruction {
 
     @Override
     public void execute(Machine m) {
-
+        System.out.println(m.getRegisters().getRegister(register));
     }
 
     @Override
     public String toString() {
-        return "";
+        return super.toString() + " register " + register;
     }
 }
