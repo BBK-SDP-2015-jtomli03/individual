@@ -126,7 +126,6 @@ public class Translator {
 			return null;
 
 		}
-		return null;
 	}
 
 	/*
