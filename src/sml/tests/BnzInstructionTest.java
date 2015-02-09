@@ -3,6 +3,7 @@ package sml.tests;
 import org.junit.Before;
 import org.junit.Test;
 import sml.BnzInstruction;
+import sml.DuplicateEntryException;
 import sml.Machine;
 import sml.Registers;
 
@@ -30,6 +31,13 @@ public class BnzInstructionTest {
     public void testExecute() throws Exception {
         ins.execute(m); // should increase the machines PC to 2, ie the position of label "f3" and hence the corresponding instruction.
         assertEquals(2, m.getPc());
+    }
+
+    @Test(expected = DuplicateEntryException.class)
+    public void testExecuteResultsInDuplicateEntryExceptionThrownIfDuplicateLabels(){
+        m.getLabels().addLabel("f3"); //label "f3" is already used in labels (duplicate)
+        ins2 = new BnzInstruction("f1", 1, "f3");
+        ins2.execute(m);
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
