@@ -43,8 +43,8 @@ public class BnzInstruction extends Instruction {
      * @param m the Machine that the instruction is running from.
      */
     @Override
-    public void execute(Machine m) {
-        if(m.getRegisters().getRegister(register) != 0) {
+    public void execute(Machine m){
+        if(!hasDuplicateLabel(m) && m.getRegisters().getRegister(register) != 0) {
             m.setPc(m.getLabels().indexOf(nextInstruction));
         }
     }
@@ -58,4 +58,21 @@ public class BnzInstruction extends Instruction {
     public String toString() {
         return super.toString() + " if content of register " + register + " != 0 then statement " + nextInstruction + " is the next one to execute. ";
     }
+
+    /**
+     * Checks if there is a duplicate label entry to nextInstruction in labels
+     * NOTE; this does not check all the labels against each other for duplicates - we only care about nextInstruction
+     * as this affects the outcome of the program
+     *
+     * @param m the Machine that the instruction is running from.
+     * @return boolean false if there is no duplicate label
+     * @throws DuplicateEntryException if there is a duplicate label entry
+     */
+    private boolean hasDuplicateLabel(Machine m) throws DuplicateEntryException{
+        if(m.getLabels().hasDuplicate(nextInstruction)){
+            throw new DuplicateEntryException("Error; your file contains instructions with duplicate labels.");
+        }
+        return false;
+    }
+
 }

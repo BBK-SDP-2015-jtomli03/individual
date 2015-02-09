@@ -1,6 +1,7 @@
 package sml;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 //An instance contains a list of Strings, called "labels",
 //in the order in which they were added to the list. 
@@ -58,5 +59,20 @@ public class Labels {
 
 	public void reset() {
 		labels.clear();
+	}
+
+	/**
+	 * Checks if there is a duplicate label entry to labelToFind in labels
+	 *
+	 * @param labelToFind the String we are checking if duplicated in labels
+	 * @return boolean false if there is no duplicate label, true if there is a duplicate
+	 */
+	public boolean hasDuplicate(String labelToFind) {
+		int count = 0;
+		for (String label: labels)
+			if (Objects.equals(label, labelToFind)){
+			count ++;
+		}
+		return count > 1;
 	}
 }
