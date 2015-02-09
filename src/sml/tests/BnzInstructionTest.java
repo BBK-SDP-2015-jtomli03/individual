@@ -39,6 +39,13 @@ public class BnzInstructionTest {
     }
 
     @Test
+    public void testExecuteSetsPcToInvalidNumberIfNextLabelToExecuteParameterDoesNotExist(){
+        ins2 = new BnzInstruction("f1", 1, "f4"); //label f4 does not exist
+        ins2.execute(m);
+        assertEquals(-1, m.getPc()); //invalid label should set PC to -1, which will then throw an ArrayIndexOutOfBoundsException when the next instruction is not found at position -1 of the ArrayList prog
+    }
+
+    @Test
     public void testToString() throws Exception {
         assertEquals("f1: bnz if content of register 1 != 0 then statement f3 is the next one to execute. ", ins.toString());
     }
