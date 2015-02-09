@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class OutInstructionTest {
 
     private OutInstruction ins;
+    private OutInstruction ins2;
     private Machine m;
     private final ByteArrayOutputStream output = new ByteArrayOutputStream();
 
@@ -36,6 +37,12 @@ public class OutInstructionTest {
     public void testExecute() throws Exception {
         ins.execute(m);
         assertEquals("10\n", output.toString());
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void testExecuteThrowsExceptionIfRegisterParameterNotInRange(){
+        ins2 = new OutInstruction("f1", 33); //register 33 doesn't exist
+        ins2.execute(m);
     }
 
     @Test
