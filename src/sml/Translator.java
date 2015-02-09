@@ -124,7 +124,6 @@ public class Translator {
 		default:
 			System.out.println("Your file contains an instruction that doesn't exist. Please amend and try again.");
 			return null;
-
 		}
 	}
 
