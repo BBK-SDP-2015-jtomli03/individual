@@ -27,6 +27,6 @@ public class BnzInstruction extends Instruction {
 
     @Override
     public String toString() {
-        return "";
+        return super.toString() + " if content of register " + register + " != 0 then statement " + nextInstruction + " is the next one to execute. ";
     }
 }
