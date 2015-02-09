@@ -82,7 +82,10 @@ public class Translator {
 		if (line.equals(""))
 			return null;
 
+		/* --> CODE PRIOR TO USING JAVA REFLECTION;
+
 		String ins = scan();
+
 		switch (ins) {
 		case "add":
 			r = scanInt();
@@ -98,19 +101,19 @@ public class Translator {
 			r = scanInt();
 			s1 = scanInt();
 			s2 = scanInt();
-			return new SubtractInstruction(label, r, s1, s2);
+			return new SubInstruction(label, r, s1, s2);
 
 		case "mul":
 			r = scanInt();
 			s1 = scanInt();
 			s2 = scanInt();
-			return new MultiplyInstruction(label, r, s1, s2);
+			return new MulInstruction(label, r, s1, s2);
 
 		case "div":
 			r = scanInt();
 			s1 = scanInt();
 			s2 = scanInt();
-			return new DivideInstruction(label, r, s1, s2);
+			return new DivInstruction(label, r, s1, s2);
 
 		case "out":
 			r = scanInt();
@@ -124,7 +127,21 @@ public class Translator {
 		default:
 			System.out.println("Your file contains an instruction that doesn't exist. Please amend and try again.");
 			return null;
+		}*/
+
+
+		//CODE USING JAVA REFLECTION;
+		String ins = scan();
+		String capitalized = ins.toUpperCase();
+		String instructionType = "sml." + capitalized.charAt(0) + ins.substring(1) + "Instruction";
+		Class instruction;
+		try {
+			instruction = Class.forName(instructionType);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
+
+		return null;
 	}
 
 	/*

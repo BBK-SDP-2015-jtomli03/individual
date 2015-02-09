@@ -6,7 +6,7 @@ package sml;
  *
  * Created by Jo on 07/02/2015.
  */
-public class SubtractInstruction extends Instruction {
+public class SubInstruction extends Instruction {
 
     private int result;
     private int op1;
@@ -18,7 +18,7 @@ public class SubtractInstruction extends Instruction {
      * @param label the label
      * @param op the opcode
      */
-    public SubtractInstruction(String label, String op) {
+    public SubInstruction(String label, String op) {
         super(label, op);
     }
 
@@ -30,7 +30,7 @@ public class SubtractInstruction extends Instruction {
      * @param op1 the register that the first operand is stored in
      * @param op2 the register that the second operand is stored in
      */
-    public SubtractInstruction(String label, int result, int op1, int op2) {
+    public SubInstruction(String label, int result, int op1, int op2) {
         this(label, "sub");
         this.result = result;
         this.op1 = op1;
