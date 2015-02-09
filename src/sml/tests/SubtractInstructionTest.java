@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class SubtractInstructionTest {
 
     private SubtractInstruction ins;
+    private SubtractInstruction ins2;
     private Machine m;
 
     @Before
@@ -26,6 +27,24 @@ public class SubtractInstructionTest {
     public void testExecute() throws Exception {
         ins.execute(m); // result of 10 - 5 into register 1
         assertEquals(5, m.getRegisters().getRegister(1));
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void testExecuteThrowsExceptionIfResultRegisterParameterNotInRange(){
+        ins2 = new SubtractInstruction("f1", 33, 2, 3); //register 33 doesn't exist
+        ins2.execute(m);
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void testExecuteThrowsExceptionIfOp1RegisterParameterNotInRange(){
+        ins2 = new SubtractInstruction("f1", 2, 33, 3); //register 33 doesn't exist
+        ins2.execute(m);
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void testExecuteThrowsExceptionIfOp2ResultRegisterParameterNotInRange(){
+        ins2 = new SubtractInstruction("f1", 2, 2, 33); //register 33 doesn't exist
+        ins2.execute(m);
     }
 
     @Test
