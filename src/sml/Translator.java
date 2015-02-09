@@ -1,10 +1,16 @@
 package sml;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.lang.reflect.Constructor;
+import java.util.List;
+import java.util.ArrayList;
+import java.lang.Object;
 
 /*
  * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
@@ -73,18 +79,36 @@ public class Translator {
 	// removed. Translate line into an instruction with label label
 	// and return the instruction
 	public Instruction getInstruction(String label) {
+		if (line.equals(""))
+			return null;
+
+		String ins = scan();
+
+		//CODE USING JAVA REFLECTION;
+		Constructor<?> constructor;
+		Object[] parameters;
+		try {
+			constructor = getConstructor(ins);
+			parameters = getParameters(constructor, label);
+			return (Instruction)constructor.newInstance(parameters);
+		}
+		catch (InstantiationException e){
+			e.printStackTrace();
+		}
+		catch (IllegalAccessException e){
+			e.printStackTrace();
+		}
+		catch (InvocationTargetException e){
+			e.printStackTrace();
+		}
+		return null;
+
+		/* --> CODE PRIOR TO USING JAVA REFLECTION;
 		int s1; // Possible operands of the instruction
 		int s2;
 		int r;
 		int x;
 		String nextStatement;
-
-		if (line.equals(""))
-			return null;
-
-		/* --> CODE PRIOR TO USING JAVA REFLECTION;
-
-		String ins = scan();
 
 		switch (ins) {
 		case "add":
@@ -128,20 +152,6 @@ public class Translator {
 			System.out.println("Your file contains an instruction that doesn't exist. Please amend and try again.");
 			return null;
 		}*/
-
-
-		//CODE USING JAVA REFLECTION;
-		String ins = scan();
-		String capitalized = ins.toUpperCase();
-		String instructionType = "sml." + capitalized.charAt(0) + ins.substring(1) + "Instruction";
-		Class instruction;
-		try {
-			instruction = Class.forName(instructionType);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		return null;
 	}
 
 	/*
@@ -175,5 +185,39 @@ public class Translator {
 		} catch (NumberFormatException e) {
 			return Integer.MAX_VALUE;
 		}
+	}
+
+	private String getInstructionType(String ins){
+		return "sml." + ins.toUpperCase().charAt(0) + ins.substring(1) + "Instruction";
+	}
+
+	private Constructor<?> getConstructor(String ins){
+		try {
+			Constructor[] constructors = Class.forName(getInstructionType(ins)).getConstructors();
+			Constructor<?> constructor = constructors[0];
+			for (Constructor<?> cons : constructors) {
+				if (cons.getParameterCount() > constructor.getParameterCount())
+					constructor = cons;
+			}
+			return constructor;
+		}
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private Object[] getParameters(Constructor<?> constructor, String label) {
+		Class[] parameterTypes = constructor.getParameterTypes();
+		Object[] parameters = new Object[parameterTypes.length];
+		parameters[0] = label;
+		for (int i = 1; i < parameterTypes.length; i++) { //start at i=1 since parameters[0] = label
+			if (parameterTypes[i].equals(int.class)) {
+				parameters[i] = scanInt();
+			} else {
+				parameters[i] = scan();
+			}
+		}
+		return parameters;
 	}
 }
