@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class BnzInstructionTest {
 
     private BnzInstruction ins;
+    private BnzInstruction ins2;
     private Machine m;
 
     @Before
@@ -29,6 +30,12 @@ public class BnzInstructionTest {
     public void testExecute() throws Exception {
         ins.execute(m); // should increase the machines PC to 2, ie the position of label "f3" and hence the corresponding instruction.
         assertEquals(2, m.getPc());
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void testExecuteThrowsExceptionIfRegisterParameterNotInRange(){
+        ins2 = new BnzInstruction("f1", 33, "f3"); //register 33 doesn't exist
+        ins2.execute(m);
     }
 
     @Test
