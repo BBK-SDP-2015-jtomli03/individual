@@ -20,7 +20,9 @@ public class BnzInstruction extends Instruction {
 
     @Override
     public void execute(Machine m) {
-
+        if(m.getRegisters().getRegister(register) != 0) {
+            m.setPc(m.getLabels().indexOf(nextInstruction));
+        }
     }
 
     @Override
