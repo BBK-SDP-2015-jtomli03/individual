@@ -33,6 +33,6 @@ public class BnzInstructionTest {
 
     @Test
     public void testToString() throws Exception {
-
+        assertEquals("f1: bnz if content of register 1 != 0 then statement f3 is the next one to execute. ", ins.toString());
     }
 }
