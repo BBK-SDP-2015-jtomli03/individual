@@ -7,5 +7,5 @@
 *.xml
 *.project
 *.prefs
-src/myFile
-bin/myFile
+src/sml/myFile
+bin/sml/myFile

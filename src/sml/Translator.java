@@ -1,16 +1,12 @@
 package sml;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.lang.reflect.Constructor;
-import java.util.List;
-import java.util.ArrayList;
-import java.lang.Object;
 
 /*
  * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
@@ -81,7 +77,6 @@ public class Translator {
 	public Instruction getInstruction(String label) {
 		if (line.equals(""))
 			return null;
-
 		String ins = scan();
 
 		//CODE USING JAVA REFLECTION;
@@ -187,10 +182,6 @@ public class Translator {
 		}
 	}
 
-	private String getInstructionType(String ins){
-		return "sml." + ins.toUpperCase().charAt(0) + ins.substring(1) + "Instruction";
-	}
-
 	private Constructor<?> getConstructor(String ins){
 		try {
 			Constructor[] constructors = Class.forName(getInstructionType(ins)).getConstructors();
@@ -205,6 +196,10 @@ public class Translator {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private String getInstructionType(String ins){
+		return "sml." + ins.toUpperCase().charAt(0) + ins.substring(1) + "Instruction";
 	}
 
 	private Object[] getParameters(Constructor<?> constructor, String label) {
