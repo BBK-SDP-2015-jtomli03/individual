@@ -182,6 +182,12 @@ public class Translator {
 		}
 	}
 
+	/**
+	 * Returns the full constructor for the type of instruction stated by the SML.
+	 *
+	 * @param ins the actual instruction of the SML eg, "add".
+	 * @return Constructor<?> the constructor for the Instruction.
+	 */
 	private Constructor<?> getConstructor(String ins){
 		try {
 			Constructor[] constructors = Class.forName(getInstructionType(ins)).getConstructors();
@@ -198,10 +204,23 @@ public class Translator {
 		return null;
 	}
 
+	/**
+	 * Returns the actual class name for the type of instruction stated in the SML.
+	 *
+	 * @param ins the actual instruction of the SML eg, "add".
+	 * @return String the class name.
+	 */
 	private String getInstructionType(String ins){
 		return "sml." + ins.toUpperCase().charAt(0) + ins.substring(1) + "Instruction";
 	}
 
+	/**
+	 * Returns the parameters needed to construct an Instruction using the specified constructor.
+	 *
+	 * @param constructor the constructor for the Instruction.
+	 * @param label the label obtained from the SML for the Instruction for which the parameters are being obtained.
+	 * @return Object[] an array of parameters.
+	 */
 	private Object[] getParameters(Constructor<?> constructor, String label) {
 		Class[] parameterTypes = constructor.getParameterTypes();
 		Object[] parameters = new Object[parameterTypes.length];
