@@ -30,6 +30,12 @@ public class DivInstructionTest {
         assertEquals(2, m.getRegisters().getRegister(1));
     }
 
+    @Test(expected = ArithmeticException.class)
+    public void testExecuteThrowsExceptionIfAttemptsToDivideByZero(){ //if the method throws this exception then assume that in the actual execute method of DivInstruction it has been caught, the message printed, and then rethrown.
+        ins2 = new DivInstruction("f1", 5, 2, 0);
+        ins2.execute(m);
+    }
+
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testExecuteThrowsExceptionIfResultRegisterParameterNotInRange(){
         ins2 = new DivInstruction("f1", 33, 2, 3); //register 33 doesn't exist

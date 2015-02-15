@@ -34,7 +34,7 @@ public class Machine {
 
 	public static void main(String[] args) {
 		Machine m = new Machine();
-		Translator t = new Translator(args[0]);
+		Translator t = new Translator("sml/test.txt");//args[0]
 		t.readAndTranslate(m.getLabels(), m.getProg());
 
 		System.out.println("Here is the program; it has " + m.getProg().size() + " instructions.");

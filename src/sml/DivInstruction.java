@@ -41,12 +41,18 @@ public class DivInstruction extends Instruction {
      * Executes the divide instruction, placing the result in the named register.
      *
      * @param m the Machine that the instruction is running from.
+     * @throws ArithmeticException if operand 2 is zero (ie. the execution of the instruction tries to divide by zero)
      */
     @Override
     public void execute(Machine m) {
         int value1 = m.getRegisters().getRegister(op1);
         int value2 = m.getRegisters().getRegister(op2);
-        m.getRegisters().setRegister(result, value1 / value2);
+        try {
+            m.getRegisters().setRegister(result, value1 / value2);
+        } catch (ArithmeticException ex) {
+            System.out.println("The instruction with label '" + label + "' tries to divide by zero. Please correct and try again.");
+            throw new ArithmeticException();
+        }
     }
 
     /**
